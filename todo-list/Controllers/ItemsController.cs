@@ -1,17 +1,16 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using ToDoList.Models;
+using ToDoListApp.Models;
 
-namespace ToDoList.Controllers
+namespace ToDoListApp.Controllers
 {
     public class ItemsController : Controller
     {
 
-        [HttpGet("/items")]
+        [HttpGet("/")]
         public ActionResult Index()
         {
-            List<Item> allItems = Item.GetAll();
-            return View(allItems);
+            return View();
         }
 
         [HttpGet("/items/new")]
@@ -20,7 +19,7 @@ namespace ToDoList.Controllers
             return View();
         }
 
-        [HttpPost("/items")]
+        [HttpPost("/")]
         public ActionResult Create()
         {
           Item newItem = new Item (Request.Form["new-item"]);
