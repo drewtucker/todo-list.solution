@@ -25,6 +25,7 @@ namespace ToDoListApp.Controllers
         public ActionResult Create()
         {
             Category newCategory = new Category(Request.Form["category-name"]);
+            newCategory.Save();
             List<Category> allCategories = Category.GetAll();
             return View("Index", allCategories);
         }
@@ -47,8 +48,9 @@ namespace ToDoListApp.Controllers
           Dictionary<string, object> model = new Dictionary<string, object>();
           Category foundCategory = Category.Find(Int32.Parse(Request.Form["category-id"]));
           string itemDescription = Request.Form["item-description"];
-          Item newItem = new Item(itemDescription);
-          foundCategory.AddItem(newItem);
+          int categoryId = Int32.Parse(Request.Form["category-id"]);
+          Item newItem = new Item(itemDescription, categoryId);
+          foundCategory.Save();
           List<Item> categoryItems = foundCategory.GetItems();
           model.Add("items", categoryItems);
           model.Add("category", foundCategory);

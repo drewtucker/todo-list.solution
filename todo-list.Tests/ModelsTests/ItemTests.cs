@@ -16,31 +16,17 @@ namespace ToDoListApp.Tests
     }
 
     [TestMethod]
-    public void GetDescription_ReturnsDescription_String()
-    {
-      //Arrange
-      string description = "Walk the dog.";
-      Item newItem = new Item(description);
-
-      //Act
-      string result = newItem.GetDescription();
-
-      //Assert
-      Assert.AreEqual(description, result);
-    }
-
-    [TestMethod]
     public void GetAll_ReturnsItems_ItemList()
     {
       //Arrange
-      string description01 = "Walk the dog";
-      string description02 = "Walk the dog";
-      Item newItem1 = new Item(description01);
-      Item newItem2 = new Item(description02);
-      List<Item> newList = new List<Item> { newItem1, newItem2 };
+      Item newItem1 = new Item("Walk the dog", 1);
+      Item newItem2 = new Item("Do some other crap", 1);
+      newItem1.Save();
+      newItem2.Save();
 
       //Act
       List<Item> result = Item.GetAll();
+      List<Item> newList = new List<Item> { newItem1, newItem2 };
 
       //Assert
       CollectionAssert.AreEqual(newList, result);
@@ -50,7 +36,7 @@ namespace ToDoListApp.Tests
     public void Save_SavesToDatabase_ItemList()
     {
       //Arrange
-      Item testItem = new Item("Mow the lawn");
+      Item testItem = new Item("Mow the lawn", 1);
 
       //Act
       testItem.Save();
@@ -62,34 +48,24 @@ namespace ToDoListApp.Tests
     }
 
     [TestMethod]
-    public void Equals_ReturnsTrueIfDescriptionsAreTheSame_Item()
+    public void Equals_OverrideTrueIfDescriptionsAreTheSame_Item()
     {
       // Arrange, Act
-      Item firstItem = new Item("Mow the lawn");
-      Item secondItem = new Item("Mow the lawn");
+      Item firstItem = new Item("Mow the lawn", 1);
+      Item secondItem = new Item("Mow the lawn", 1);
 
       // Assert
       Assert.AreEqual(firstItem, secondItem);
     }
 
     [TestMethod]
-    public void GetAll_DatabaseEmptyAtFirst_0()
-    {
-      //Arrange, Act
-      int result = Item.GetAll().Count;
-
-      //Assert
-      Assert.AreEqual(0, result);
-    }
-
-    [TestMethod]
-    public void Save_AssignsIdToObject_Id()
+    public void Save_DatabaseAssignsIdToObject_Id()
     {
       //Arrange
-      Item testItem = new Item("Mow the lawn");
+      Item testItem = new Item("Mow the lawn", 1);
+      testItem.Save();
 
       //Act
-      testItem.Save();
       Item savedItem = Item.GetAll()[0];
 
       int result = savedItem.GetId();
@@ -103,7 +79,7 @@ namespace ToDoListApp.Tests
     public void Find_FindsItemInDatabase_Item()
     {
       //Arrange
-      Item testItem = new Item("Mow the lawn");
+      Item testItem = new Item("Mow the lawn", 1);
       testItem.Save();
 
       //Act
@@ -116,7 +92,23 @@ namespace ToDoListApp.Tests
     public void Dispose()
     {
       Item.DeleteAll();
+      Category.DeleteAll();
     }
+
+    // [TestMethod]
+    // public void Edit_UpdatesItemInDatabase_String()
+    // {
+    //   string firstDescription = "Walk the Dog";
+    //   Item testItem = new Item(firstDescription, 1);
+    //   testItem.Save();
+    //   string secondDescription = "Mow the lawn";
+    //
+    //   testItem.Edit(secondDescription);
+    //
+    //   string result = Item.Find(testItem.GetId()).GetDescription();
+    //
+    //   Assert.AreEqual(secondDescription , result);
+    // }
 
   }
 }
