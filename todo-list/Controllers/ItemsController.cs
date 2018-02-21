@@ -30,7 +30,6 @@ namespace ToDoListApp.Controllers
           return RedirectToAction("Index");
         }
 
-
         [HttpGet("/items/{id}")]
         public ActionResult Details(int id)
         {
