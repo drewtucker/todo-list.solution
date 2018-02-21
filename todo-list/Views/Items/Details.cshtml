@@ -7,22 +7,14 @@
   </head>
   <body>
     <h1>To Do List</h1>
-    <ul>
       @if(Model != null)
       {
-        @foreach(Item item in Model)
-        {
-          <li><a href='/items/@item.GetId()'>@item.GetDescription()</a></li>
-        }
+        <h2>@Model.GetDescription()</h2>
       }
-    </ul>
     <a href="/items/new">Add a new item.</a>
 
     <form action="/items/delete" method="post">
     <button type="submit" name="button">Clear All Items</button>
     </form>
-
-    <h3><a href='/categories'>View categories</a></h3>
-    <h3><a href='/categories/new'>Add a new category</a></h3>
   </body>
 </html>

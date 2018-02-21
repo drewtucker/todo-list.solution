@@ -19,20 +19,30 @@ namespace ToDoListApp.Controllers
             return View();
         }
 
-        [HttpPost("/")]
-        public ActionResult Create()
-        {
-          Item newItem = new Item (Request.Form["new-item"]);
-          newItem.Save();
-          List<Item> allItems = Item.GetAll();
-          return View("Index", allItems);
-        }
-
         [HttpPost("/items/delete")]
         public ActionResult DeleteAll()
         {
-          Item.ClearAll();
+          Item.DeleteAll();
           return View();
         }
+
+        // [HttpGet("/categories/{categoryId}/items/new")]
+        // public ActionResult CreateForm(int categoryId)
+        // {
+        //   Dictionary<string, object> model = new Dictionary<string, object>();
+        //   Category category = Category.Find(categoryId);
+        //   return View(category);
+        // }
+        //
+        // [HttpGet("/categories/{categoryId}/items/{itemId}")]
+        // public ActionResult Details(int categoryId, int itemId)
+        // {
+        //   Item item = Item.Find(itemId);
+        //   Dictionary<string, object> model = new Dictionary<string, object>();
+        //   Category category = Category.Find(categoryId);
+        //   model.Add("item", item);
+        //   model.Add("category", category);
+        //   return View(item);
+        // }
     }
 }
