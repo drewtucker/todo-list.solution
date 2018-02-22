@@ -16,7 +16,7 @@ namespace ToDoListApp.Controllers
         }
 
         [HttpGet("/categories/new")]
-        public ActionResult CreateForm()
+        public ActionResult CreateCategoryForm()
         {
             return View();
         }
@@ -41,20 +41,26 @@ namespace ToDoListApp.Controllers
             return View(model);
         }
 
-
-        [HttpPost("/items")]
-        public ActionResult CreateItem()
+        [HttpGet("/categories/{id}/items/new")]
+        public ActionResult CreateItemForm()
         {
-          Dictionary<string, object> model = new Dictionary<string, object>();
-          Category foundCategory = Category.Find(Int32.Parse(Request.Form["category-id"]));
-          string itemDescription = Request.Form["item-description"];
-          int categoryId = Int32.Parse(Request.Form["category-id"]);
-          Item newItem = new Item(itemDescription, categoryId);
-          foundCategory.Save();
-          List<Item> categoryItems = foundCategory.GetItems();
-          model.Add("items", categoryItems);
-          model.Add("category", foundCategory);
-          return View("Details", model);
+          return View("~/Views/Items/CreateItemForm.cshtml");
         }
+
+        //
+        // [HttpPost("/items")]
+        // public ActionResult CreateItem()
+        // {
+        //   Dictionary<string, object> model = new Dictionary<string, object>();
+        //   Category foundCategory = Category.Find(Int32.Parse(Request.Form["category-id"]));
+        //   string itemDescription = Request.Form["item-description"];
+        //   int categoryId = Int32.Parse(Request.Form["category-id"]);
+        //   Item newItem = new Item(itemDescription, categoryId);
+        //   foundCategory.Save();
+        //   List<Item> categoryItems = foundCategory.GetItems();
+        //   model.Add("items", categoryItems);
+        //   model.Add("category", foundCategory);
+        //   return View("Details", model);
+        // }
     }
 }
